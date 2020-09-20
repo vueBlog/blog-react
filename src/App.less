@@ -1,0 +1,25 @@
+@import '~antd/dist/antd.less';
+
+@border-color: #e6e6e6;
+// 小间距
+@s-spacing: 8px;
+// 中等间距
+@m-spacing: 16px;
+// 间距
+@spacing: 24px;
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.clearfix {
+  &::before,
+  &::after {
+    display: table;
+    content: "";
+  }
+  &::after {
+    clear: both;
+  }
+}
