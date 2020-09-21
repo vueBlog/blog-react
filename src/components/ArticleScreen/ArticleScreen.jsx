@@ -15,7 +15,7 @@ function ArticleScreen(props) {
       <div className="article-screen__right">
         <div className="">文章排序：</div>
         <Select
-          defaultValue="0"
+          value={props.order}
           style={{ width: 217 }}
           onChange={props.onSelectChange}
         >

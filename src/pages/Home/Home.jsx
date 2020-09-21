@@ -3,6 +3,7 @@ import axios from '@/plugins/axios';
 import { Layout } from 'antd';
 import ArticleList from '@/components/ArticleList/ArticleList';
 import ArticleScreen from '@/components/ArticleScreen/ArticleScreen';
+import { encodeQuery, decodeQuery } from '@/utils/Search';
 import './Home.less';
 
 const { Sider, Content } = Layout;
@@ -13,7 +14,7 @@ class Home extends React.Component {
     this.state = {
       articleList: [],
       justOriginal: false,
-      order: 0,
+      order: '0',
       total: 0,
       limit: process.env.REACT_APP_listLimit
         ? process.env.REACT_APP_listLimit * 1
@@ -28,6 +29,9 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({
+      ...decodeQuery(this.props.location.search),
+    });
     this.getListData();
   }
 
@@ -63,7 +67,16 @@ class Home extends React.Component {
 
   onSelectChange(value) {
     this.setState({
-      order: value * 1,
+      order: value,
+    });
+    const searchObj = decodeQuery(this.props.location.search);
+    console.log(searchObj);
+    this.props.history.push({
+      ...this.props.location,
+      search: encodeQuery({
+        ...searchObj,
+        order: value,
+      }),
     });
   }
 
