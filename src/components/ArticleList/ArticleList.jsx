@@ -1,10 +1,12 @@
 import React from 'react';
+import ArticleListItem from '@/components/ArticleListItem/ArticleListItem';
 
 import './ArticleList.less';
 
 function ArticleList(props) {
-  console.log(props);
-  return <div className="header-logo_text">樊小书生</div>;
+  return props.listData.map((item) => (
+    <ArticleListItem key={item.articleId} itemData={item}></ArticleListItem>
+  ));
 }
 
 export default ArticleList;
