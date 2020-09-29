@@ -95,12 +95,11 @@ class Home extends React.Component {
   }
 
   render() {
-    const { loading, articleList, justOriginal, order } = this.state;
+    const { loading, limit, articleList, justOriginal, order } = this.state;
     const { onCheckboxChange, onSelectChange } = this;
     let list;
-    console.log(loading);
     if (loading) {
-      list = <ListSkeleton></ListSkeleton>;
+      list = <ListSkeleton limit={limit}></ListSkeleton>;
     } else {
       list = <ArticleList listData={articleList}></ArticleList>;
     }
