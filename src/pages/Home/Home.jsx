@@ -74,24 +74,43 @@ class Home extends React.Component {
   }
 
   onCheckboxChange(event) {
-    this.setState({
-      justOriginal: event.target.checked,
-    });
+    this.setState(
+      {
+        justOriginal: event.target.checked,
+      },
+      (_) => {
+        this.getListData();
+        const searchObj = decodeQuery(this.props.location.search);
+        console.log(searchObj);
+        this.props.history.push({
+          ...this.props.location,
+          search: encodeQuery({
+            ...searchObj,
+            justOriginal: event.target.checked,
+          }),
+        });
+      }
+    );
   }
 
   onSelectChange(value) {
-    this.setState({
-      order: value,
-    });
-    const searchObj = decodeQuery(this.props.location.search);
-    console.log(searchObj);
-    this.props.history.push({
-      ...this.props.location,
-      search: encodeQuery({
-        ...searchObj,
+    this.setState(
+      {
         order: value,
-      }),
-    });
+      },
+      (_) => {
+        this.getListData();
+        const searchObj = decodeQuery(this.props.location.search);
+        console.log(searchObj);
+        this.props.history.push({
+          ...this.props.location,
+          search: encodeQuery({
+            ...searchObj,
+            order: value,
+          }),
+        });
+      }
+    );
   }
 
   render() {
