@@ -1,36 +1,15 @@
-{
-  /* <template>
-  <div class="rect"
-    :style="{ margin, flex, width, height, opacity }"></div>
-</template>
+import React from 'react';
 
-<script>
-export default {
-  name: 'skeleton-rect',
-  props: {
-    margin: String,
-    flex: String,
-    width: {
-      type: String,
-      default: '100%'
-    },
-    height: {
-      type: String,
-      default: '26px'
-    },
-    opacity: {
-      type: String,
-      default: '1'
-    }
-  }
+function Rect(props) {
+  const { margin, flex, width = '100%', height = '26px', opacity = 1 } = props;
+  const basicStyle = {
+    flex: '0 0 auto',
+    backgroundColor: '#efefef',
+    borderRadius: '2px',
+  };
+  return (
+    <div style={{ ...basicStyle, margin, flex, width, height, opacity }}></div>
+  );
 }
-</script>
 
-<style lang="scss" scoped>
-.rect {
-  flex: 0 0 auto;
-  background-color: #efefef;
-  border-radius: 2px;
-}
-</style> */
-}
+export default Rect;

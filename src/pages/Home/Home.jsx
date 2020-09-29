@@ -1,9 +1,11 @@
 import React from 'react';
 import axios from '@/plugins/axios';
 import { Layout } from 'antd';
+
+import ListSkeleton from '@/components/Skeleton/ListSkeleton';
 import ArticleList from '@/components/ArticleList/ArticleList';
 import ArticleScreen from '@/components/ArticleScreen/ArticleScreen';
-import { encodeQuery, decodeQuery } from '@/utils/Search';
+import { encodeQuery, decodeQuery } from '@/utils/LocationSearch';
 import './Home.less';
 
 const { Sider, Content } = Layout;
@@ -12,6 +14,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
       articleList: [],
       justOriginal: false,
       order: '0',
@@ -44,6 +47,9 @@ class Home extends React.Component {
       dateTime: this.state.dateTime,
       columnId: this.state.columnId,
     };
+    this.setState({
+      loading: true,
+    });
     axios
       .get('/articleList', {
         params: {
@@ -55,6 +61,14 @@ class Home extends React.Component {
         this.setState({
           total: r.data.total,
           articleList: r.data.list,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally((_) => {
+        this.setState({
+          loading: false,
         });
       });
   }
@@ -81,8 +95,15 @@ class Home extends React.Component {
   }
 
   render() {
-    const { articleList, justOriginal, order } = this.state;
+    const { loading, articleList, justOriginal, order } = this.state;
     const { onCheckboxChange, onSelectChange } = this;
+    let list;
+    console.log(loading);
+    if (loading) {
+      list = <ListSkeleton></ListSkeleton>;
+    } else {
+      list = <ArticleList listData={articleList}></ArticleList>;
+    }
     return (
       <Layout className="page-content__body">
         <Sider theme="light" className="page-sider">
@@ -95,7 +116,7 @@ class Home extends React.Component {
             onCheckboxChange={onCheckboxChange}
             onSelectChange={onSelectChange}
           ></ArticleScreen>
-          <ArticleList listData={articleList}></ArticleList>
+          {list}
         </Content>
       </Layout>
     );
