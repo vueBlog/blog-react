@@ -116,12 +116,6 @@ class Home extends React.Component {
   render() {
     const { loading, limit, articleList, justOriginal, order } = this.state;
     const { onCheckboxChange, onSelectChange } = this;
-    let list;
-    if (loading) {
-      list = <ListSkeleton limit={limit}></ListSkeleton>;
-    } else {
-      list = <ArticleList listData={articleList}></ArticleList>;
-    }
     return (
       <Layout className="page-content__body">
         <Sider theme="light" className="page-sider">
@@ -134,7 +128,11 @@ class Home extends React.Component {
             onCheckboxChange={onCheckboxChange}
             onSelectChange={onSelectChange}
           ></ArticleScreen>
-          {list}
+          {loading ? (
+            <ListSkeleton limit={limit}></ListSkeleton>
+          ) : (
+            <ArticleList listData={articleList}></ArticleList>
+          )}
         </Content>
       </Layout>
     );
